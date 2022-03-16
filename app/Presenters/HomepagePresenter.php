@@ -25,7 +25,9 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
         $this->database = $database;
         $this->facade = $facade;
 	}
+
  /**Render defaultní stránky */
+
     public function renderDefault(): void
 	{
 		$this->template->products = $this->facade->getProducts();
@@ -35,7 +37,9 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
         
 	}
    
+
     /**Formulář na tvorbu a editaci produktu */
+
     public function createComponentProductForm(): Form
     {
         $form = new Form;
@@ -69,6 +73,7 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
     }
 
     /** Potvrzení produktového formuláře */
+
     public function productFormSucceeded(Form $form, array $values): void
     {
         $productId = $this->getParameter('productId');
@@ -94,13 +99,15 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
         $this->redirect(':default');
     }
 
+
     /**Render editační stránky a načtení defaultních hodnot */
+
     public function renderEdit(int $productId): void
     {
-        $products = $this->database
+        dump($products = $this->database
             ->table('product')
-            ->get($productId);
-
+            ->get($productId));
+        
         if (!$products) {
             $this->error('Produkt nenalezen');
         }
@@ -129,7 +136,9 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
 
     }
 
+
     /**Formulář na tvorbu kategorií */
+
     public function createComponentCategoryForm(): Form
     {
         $form = new Form;
