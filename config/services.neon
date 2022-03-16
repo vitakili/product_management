@@ -1,0 +1,6 @@
+services:
+
+	- App\Model\ProductFacade
+
+	
+	- App\Router\RouterFactory::createRouter

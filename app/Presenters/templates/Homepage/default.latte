@@ -1,0 +1,92 @@
+{block content}
+
+      <h3><i class="fa fa-angle-right"></i> Seznam Produktů</h3>
+	         <div class="row">
+      <a class="btn btn-primary" n:href="create">
+            Přidat nový produkt
+      </a>
+      <a class="my-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+	<h5 class="collapse-btn">
+	<i class="fa fa-chevron-right" aria-hidden="true"></i>Kategorie produktů</h5>
+      </a>
+	<div class="collapse row" id="collapseExample">
+            <div class="col">
+	   {include bootstrap-form categoryForm}
+             </div>
+             <table class="table table-advance table-hover col">
+             <tr n:foreach="$category as $c" >
+             {if $c->name != "Neurčeno"}
+                  <td >
+                  {$c->name}
+                  <td>
+                  <a  n:href=":deleteCategory $c->id"  data-bs-toggle="tooltip" title="Smazat kategorii">
+                  <button class="btn btn-danger btn-xs" onClick="return confirm('Opravdu chcete smazat kategorii?');"><i class="fa fa-trash "></i></button></a>
+                  </td>
+            {/if}
+             </tr>
+             </table>
+	</div>
+	      <a class="my-3" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="true" aria-controls="collapseExample2">
+	<h5 class="collapse-btn">
+	<i class="fa fa-chevron-right" aria-hidden="true"></i>Tagy produktů</h5>
+      </a>
+	<div class="collapse row" id="collapseExample2">
+            <div class="col">
+	   {include bootstrap-form tagForm}
+             </div>
+             <table class="table table-advance table-hover col">
+             <tr n:foreach="$tag as $t" >
+                  <td >
+                  {$t->name}
+                  <td>
+                  <a  n:href=":deleteTag $t->id"  data-bs-toggle="tooltip" title="Smazat tag">
+                  <button class="btn btn-danger btn-xs" onClick="return confirm('Opravdu chcete smazat tag?');"><i class="fa fa-trash "></i></button></a>
+                  </td>
+             </tr>
+             </table>
+	</div>
+	   
+      <div class="row">
+
+            <div class="content-panel">
+            <table class="table table-striped table-advance table-hover">
+                  <thead>
+                  <tr>
+                        <th>ID</th>
+                        <th>Název</th>
+                        <th>Datum publikace</th>
+                        <th>Kategorie</th>
+                        <th>Štítky</th>
+                        <th>Stav</td>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr n:foreach="$products as $p">
+                  <td>{$p->id}</td>
+                  <td>{$p->name}</td>
+                  <td>{$p->datetime|date:'j. n. Y'}</td>
+                  <td>{$p->category->name}</td>
+                  <td>
+                        {foreach $productTags as $tg}
+                              {if $tg->FK_product == $p->id}
+                                    {$tag->get($tg->FK_tag)->name}
+                              {/if}
+                        {/foreach}
+                  </td>
+                  <td>{$p->active}</td>
+                  <td>
+                        <a n:href=":edit $p->id" data-bs-toggle="tooltip" title="Editovat">
+                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil-alt"></i></button></a>
+                        <a  n:href=":delete $p->id"  data-bs-toggle="tooltip" title="Smazat produkt">
+                        <button class="btn btn-danger btn-xs" onClick="return confirm('Opravdu chcete produkt smazat?');"><i class="fa fa-trash "></i></button></a>
+                  </td>
+                  </tr>
+                  </tbody>
+            </table>
+            <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">
+			{$flash->message}
+		</div>
+		</div>
+      </div>
+
+{/block}

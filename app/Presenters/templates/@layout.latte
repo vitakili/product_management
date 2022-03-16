@@ -1,0 +1,19 @@
+{import '../../Komponenty/head.latte'}
+{import 'components/form.latte'}
+
+{include head}
+
+	<section id="main-content">
+          <section class="container">
+		  	{snippet flashes}
+				<div class="flash slide alert alert-{$flash->type}" n:foreach="$flashes as $flash">
+					<div class="container">
+						{$flash->message}
+					</div>
+				</div>
+			{/snippet}
+				{include content}
+          </section>
+	</section>
+{import '../../Komponenty/script.latte'}
+{include script}
